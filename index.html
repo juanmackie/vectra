@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VECTRA | Mathematical Pattern Generator by ASOBOAD</title>
+<meta name="description" content="Create beautiful mathematical patterns in your browser. Explore Lissajous curves, rose curves, spirographs, palettes, morphing, SVG export, and PNG export.">
+<meta name="keywords" content="mathematical pattern generator, generative art, Lissajous, rose curve, spirograph, SVG generator, design tool">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#080a10">
+<link rel="canonical" href="https://amix-design.com/asoboad/tools/vectra/">
+<link rel="preload" as="font" type="font/woff2" href="common/fonts/bebas-neue/400-1.woff2" crossorigin>
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ASOBOAD">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="VECTRA | Mathematical Pattern Generator">
+<meta property="og:description" content="Explore eight equation-driven pattern systems, morph parameters in real time, and export SVG or PNG artwork.">
+<meta property="og:url" content="https://amix-design.com/asoboad/tools/vectra/">
+<meta property="og:image" content="https://amix-design.com/asoboad/tools/vectra/ogp/ogp.jpg?v=202606191600">
+<meta property="og:image:alt" content="VECTRA mathematical pattern generator interface">
+<meta property="og:image:width" content="2000">
+<meta property="og:image:height" content="1300">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="VECTRA | Mathematical Pattern Generator">
+<meta name="twitter:description" content="Design beautiful equation-born patterns in the browser. Free SVG and PNG export.">
+<meta name="twitter:image" content="https://amix-design.com/asoboad/tools/vectra/ogp/ogp.jpg?v=202606191600">
+<meta name="twitter:image:alt" content="VECTRA mathematical pattern generator interface">
+
+<link rel="stylesheet" href="common/fonts/bebas-neue.css">
+<link rel="stylesheet" href="common/fonts/geist-sans.css">
+<link rel="stylesheet" href="css/style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "VECTRA Mathematical Pattern Generator",
+      "url": "https://amix-design.com/asoboad/tools/vectra/",
+      "description": "Create equation-driven generative patterns in the browser with real-time parameters, palettes, morphing, SVG export, and PNG export.",
+      "applicationCategory": "DesignApplication",
+      "operatingSystem": "Web (Chrome, Safari, Edge, Firefox)",
+      "browserRequirements": "HTML5, JavaScript",
+      "inLanguage": "en",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+      "featureList": [
+        "Eight mathematical pattern systems",
+        "Real-time parameter controls and presets",
+        "Custom palettes and color mapping modes",
+        "Smooth morphing preview",
+        "SVG and high-resolution PNG export"
+      ],
+      "creator": { "@type": "Organization", "name": "ASOBOAD", "url": "https://amix-design.com/asoboad/" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to generator</a>
+<header>
+  <div class="logo" aria-label="VECTRA"><svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20 L18 6"/><path d="M11 6 L18 6 L18 13"/><circle cx="4" cy="20" r="2" fill="currentColor" stroke="none"/></svg><span>VECTRA</span></div>
+  <div class="tagline">Beautiful design born from equations</div>
+  <div class="head-spacer"></div>
+  <div class="readout" id="readout" aria-live="polite">Loading generator…</div>
+  <a class="about-link" href="about.html" aria-label="About this tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span class="lbl">About</span></a>
+</header>
+
+<main id="main">
+  <div class="stage">
+    <canvas id="view" aria-label="Generated mathematical pattern preview"></canvas>
+    <div class="stage-tools" aria-label="Quick actions">
+      <button class="btn ghost" id="bShuffle" type="button" aria-label="Shuffle current parameters"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22"/><path d="m18 2 4 4-4 4"/><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"/><path d="m18 14 4 4-4 4"/></svg> Shuffle</button>
+      <button class="btn ghost" id="bColor" type="button" aria-label="Shuffle palette and color mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg> Color</button>
+      <button class="btn ghost" id="bFull" type="button" aria-label="Randomize everything"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.962 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg> All Random</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="picker" id="picker" aria-label="Pattern systems"></div>
+    <div class="panel-scroll" id="scroll">
+
+      <section id="secPreset">
+        <button class="sec-head" type="button" aria-expanded="true">Presets <span class="tw">▾</span></button>
+        <div class="sec-body"><div class="presets" id="presets"></div></div>
+      </section>
+
+      <section id="secStudio">
+        <button class="sec-head" type="button" aria-expanded="true">Studio <span class="tw">▾</span></button>
+        <div class="sec-body">
+          <div class="btn-grid">
+            <button class="btn accent span2" id="bCopyURL" type="button">Copy Share URL</button>
+            <button class="btn" id="bRemix" type="button">Remix Unlocked</button>
+            <button class="btn" id="bClearHistory" type="button">Clear History</button>
+          </div>
+          <div class="share-status" id="shareStatus" aria-live="polite"></div>
+          <div class="swatch-label">History</div>
+          <div class="history" id="history"></div>
+        </div>
+      </section>
+
+      <section id="secParams">
+        <button class="sec-head" type="button" aria-expanded="true">Formula Parameters <span class="tw">▾</span></button>
+        <div class="sec-body" id="params"></div>
+      </section>
+
+      <section id="secColor">
+        <button class="sec-head" type="button" aria-expanded="true">Color <span class="tw">▾</span></button>
+        <div class="sec-body">
+          <div class="swatch-label">Palette <span class="lockslot" data-lock="s:palette" style="margin-left:auto"></span></div>
+          <div class="chips" id="palettes"></div>
+          <div class="custom-editor hidden" id="customEditor"></div>
+          <div class="field">
+            <div class="field-top"><label for="colorMode">Color mode</label></div>
+            <div class="seg" id="colorMode" role="group" aria-label="Color mode">
+              <button data-v="sequence" class="on" type="button" aria-pressed="true">Sequence</button>
+              <button data-v="distance" type="button" aria-pressed="false">Center Distance</button>
+              <button data-v="velocity" type="button" aria-pressed="false">Velocity</button>
+              <button data-v="solid" type="button" aria-pressed="false">Solid</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="secStyle">
+        <button class="sec-head" type="button" aria-expanded="true">Style <span class="tw">▾</span></button>
+        <div class="sec-body">
+          <div class="field">
+            <div class="field-top"><label>Draw mode</label><span class="ft-right"><span class="lockslot" data-lock="s:draw"></span></span></div>
+            <div class="seg" id="drawMode" role="group" aria-label="Draw mode">
+              <button data-v="line" type="button" aria-pressed="true">Line</button>
+              <button data-v="dots" type="button" aria-pressed="false">Dots</button>
+            </div>
+          </div>
+          <div class="field" id="fWidth">
+            <div class="field-top"><label for="vWidth">Line width</label><span class="ft-right"><span class="lockslot" data-lock="s:lineWidth"></span><input class="val" id="vWidth" type="text" aria-label="Line width value"></span></div>
+            <input type="range" id="rWidth" min="0.2" max="6" step="0.1" aria-label="Line width">
+          </div>
+          <div class="field" id="fSize">
+            <div class="field-top"><label for="vSize">Dot size</label><span class="ft-right"><span class="lockslot" data-lock="s:pointSize"></span><input class="val" id="vSize" type="text" aria-label="Dot size value"></span></div>
+            <input type="range" id="rSize" min="0.3" max="8" step="0.1" aria-label="Dot size">
+          </div>
+          <div class="field">
+            <div class="field-top"><label for="vOpacity">Opacity</label><span class="ft-right"><span class="lockslot" data-lock="s:opacity"></span><input class="val" id="vOpacity" type="text" aria-label="Opacity value"></span></div>
+            <input type="range" id="rOpacity" min="0.02" max="1" step="0.01" aria-label="Opacity">
+          </div>
+          <div class="field">
+            <div class="field-top"><label for="vDensity">Density</label><span class="ft-right"><span class="lockslot" data-lock="s:density"></span><input class="val" id="vDensity" type="text" aria-label="Density value"></span></div>
+            <input type="range" id="rDensity" min="200" max="60000" step="100" aria-label="Density in points">
+          </div>
+          <label class="toggle" id="tBlend" role="checkbox" aria-checked="false" tabindex="0"><span class="box"></span><span>Additive blend (neon)</span></label>
+          <label class="toggle on" id="tMorph" role="checkbox" aria-checked="true" tabindex="0"><span class="box"></span><span>Smooth morph</span></label>
+          <div class="field" id="fMorph">
+            <div class="field-top"><label for="vMorph">Morph speed</label><input class="val" id="vMorph" type="text" aria-label="Morph speed value"></div>
+            <input type="range" id="rMorph" min="0.04" max="0.5" step="0.01" aria-label="Morph speed">
+          </div>
+        </div>
+      </section>
+
+      <section id="secTransform" class="collapsed">
+        <button class="sec-head" type="button" aria-expanded="false">Transform & Background <span class="tw">▾</span></button>
+        <div class="sec-body">
+          <div class="field">
+            <div class="field-top"><label for="vScale">Scale</label><input class="val" id="vScale" type="text" aria-label="Scale value"></div>
+            <input type="range" id="rScale" min="0.2" max="1.6" step="0.01" aria-label="Scale">
+          </div>
+          <div class="field">
+            <div class="field-top"><label for="vRot">Rotation (°)</label><input class="val" id="vRot" type="text" aria-label="Rotation value"></div>
+            <input type="range" id="rRot" min="0" max="360" step="1" aria-label="Rotation">
+          </div>
+          <div class="swatch-label" style="margin-top:14px">Background</div>
+          <div class="chips" id="bgs"></div>
+          <div class="custom-editor hidden" id="bgEditor"></div>
+        </div>
+      </section>
+
+      <section id="secExport">
+        <button class="sec-head" type="button" aria-expanded="true">Export <span class="tw">▾</span></button>
+        <div class="sec-body">
+          <div class="btn-grid">
+            <button class="btn accent span2" id="bSVG" type="button">Export SVG</button>
+            <button class="btn" id="bPNG" type="button">Save PNG</button>
+            <button class="btn" id="bReset" type="button">Reset</button>
+          </div>
+          <div class="hint">SVG exports as a 1000×1000 vector. Lines become one path per color bin; dots become grouped circle paths. SVG stays editable in Illustrator and scales without quality loss. For high-density dot exports, lower density first if the file becomes too large.</div>
+          <label class="toggle" id="tSmooth" role="checkbox" aria-checked="false" tabindex="0"><span class="box"></span><span>Smooth single-path export (line, solid color)</span></label>
+          <div class="hint">For line drawings only. When enabled, export uses one solid color from the final palette color and simplifies the path into a single Bézier curve while preserving sharp corners. This does not affect preview, dot mode, or PNG export.</div>
+        </div>
+      </section>
+
+      <div class="panel-foot">
+        <a class="foot-about" href="about.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>About VECTRA</a>
+        <nav class="foot-links" aria-label="Footer links">
+          <a href="https://amix-design.com/asoboad/" target="_blank" rel="noopener">Made by ASOBOAD</a><span>/</span>
+          <a href="https://amix-design.com/tools" target="_blank" rel="noopener">Tool list</a><span>/</span>
+          <a href="https://amix-design.com/term/tools" target="_blank" rel="noopener">Terms</a><span>/</span>
+          <a href="license.html">License</a>
+        </nav>
+        <span>© VECTRA | Beautiful design born from mathematics</span>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<div class="modal" id="pngModal" role="dialog" aria-modal="true" aria-labelledby="pngTitle">
+  <div class="modal-card">
+    <h2 id="pngTitle" class="visually-hidden">PNG preview</h2>
+    <img id="pngImg" alt="Generated PNG preview">
+    <div class="modal-cap">Long-press the image to save it.</div>
+    <button class="btn" id="pngClose" type="button">Close</button>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
