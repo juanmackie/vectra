@@ -62,4 +62,4 @@ Then open <http://localhost:8000>. Serving over `localhost` (or HTTPS) is recomm
 - The tool is free to use, and generated patterns (SVG/PNG) may be used freely in your own work — see the disclaimer in [about.html](about.html).
 - Third-party assets in this repository: **Bebas Neue** (SIL Open Font License 1.1) and **Lucide icons** (ISC License). Details in [license.html](license.html) and `common/LICENSES/`.
 
-Made by [ASOBOAD](https://amix-design.com/asoboad/).
+Made by [Juan Mackie](https://www.juanmackie.com/).
