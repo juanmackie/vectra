@@ -117,7 +117,7 @@ function resampleArr(src,M){const L=src.length,out=new Float32Array(M);if(L===0)
 function paletteName(){return S.useCustom?"Custom":PALETTES[S.palette].name;}
 
 function computeTVals(nx,ny,out){
-  const N=nx.length; if(out.length!==N)out=new Float32Array(N);
+  const N=nx.length; if(!out||out.length!==N)out=new Float32Array(N);
   if(S.colorMode==="sequence"){for(let i=0;i<N;i++)out[i]=N>1?i/(N-1):0;}
   else if(S.colorMode==="distance"){let mr=1e-9;for(let i=0;i<N;i++){const r=Math.hypot(nx[i],ny[i]);if(r>mr)mr=r;}for(let i=0;i<N;i++)out[i]=Math.hypot(nx[i],ny[i])/mr;}
   else if(S.colorMode==="velocity"){let mx=1e-9;const seg=new Float32Array(N);for(let i=1;i<N;i++){seg[i]=Math.hypot(nx[i]-nx[i-1],ny[i]-ny[i-1]);if(seg[i]>mx)mx=seg[i];}seg[0]=seg[1]||0;for(let i=0;i<N;i++)out[i]=seg[i]/mx;}
