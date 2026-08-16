@@ -1,0 +1,15 @@
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Build artifacts (none expected, but guard against future)
+node_modules/
+dist/
+*.log
