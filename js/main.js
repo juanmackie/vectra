@@ -111,7 +111,6 @@ function resize(){
 }
 
 function hex2rgb(h){h=h.replace("#","");return[parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
-function rgbToHex(c){return "#"+[c[0],c[1],c[2]].map(v=>Math.round(v).toString(16).padStart(2,"0")).join("");}
 function sampleRGB(pal,t){t=t<0?0:t>1?1:t;const s=(pal.length-1)*t,i=Math.floor(s),f=s-i,a=pal[i],b=pal[Math.min(i+1,pal.length-1)];return[a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f,a[2]+(b[2]-a[2])*f];}
 function resampleArr(src,M){const L=src.length,out=new Float32Array(M);if(L===0)return out;if(L===M){out.set(src);return out;}for(let i=0;i<M;i++){const pos=M>1?i/(M-1)*(L-1):0,j=Math.floor(pos),f=pos-j;out[i]=src[j]+(src[Math.min(j+1,L-1)]-src[j])*f;}return out;}
 function paletteName(){return S.useCustom?"Custom":PALETTES[S.palette].name;}
