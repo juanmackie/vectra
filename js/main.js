@@ -201,9 +201,44 @@ function render(){
 function compactState(){
   return {v:1,p:S.pat,params:S.params,draw:S.draw,lw:S.lineWidth,ps:S.pointSize,op:S.opacity,d:S.density,blend:S.blend?1:0,palette:S.palette,cm:S.colorMode,scale:S.scale,rot:S.rot,bg:S.bg,bgm:S.bgMode,bgc:S.bgCustom,morph:S.morph?1:0,ms:S.morphSpeed,custom:S.useCustom?S.customColors:null,smooth:S.smoothPath?1:0,locks:[...LOCKS]};
 }
+const VALID_DRAW_MODES=new Set(["line","dots"]);
+const VALID_COLOR_MODES=new Set(["sequence","distance","velocity","solid"]);
+const VALID_BG_MODES=new Set(["preset","transparent","custom"]);
+const HEX_COLOR=/^#[0-9a-f]{6}$/i;
+function safeNumber(value,fallback,min,max){const n=Number(value);return Number.isFinite(n)?Math.max(min,Math.min(max,n)):fallback;}
+function safeColor(value,fallback,allowTransparent){if(typeof value!=="string")return fallback;if(allowTransparent&&value==="transparent")return value;return HEX_COLOR.test(value)?value:fallback;}
+function sanitizeParams(patternKey,value){
+  const source=value&&typeof value==="object"&&!Array.isArray(value)?value:{};
+  const next={},defs=PATTERNS[patternKey].params;
+  for(const key in defs){const spec=defs[key];next[key]=safeNumber(source[key],spec.def,spec.min,spec.max);}
+  return next;
+}
 function expandState(o){
-  if(!o||!PATTERNS[o.p])return;
-  S.pat=o.p;S.params=Object.assign({},o.params||{});S.draw=o.draw||S.draw;S.lineWidth=Number.isFinite(+o.lw)?+o.lw:S.lineWidth;S.pointSize=Number.isFinite(+o.ps)?+o.ps:S.pointSize;S.opacity=Number.isFinite(+o.op)?+o.op:S.opacity;S.density=Number.isFinite(+o.d)?+o.d:S.density;S.blend=!!o.blend;S.palette=Number.isFinite(+o.palette)?+o.palette:S.palette;S.colorMode=o.cm||S.colorMode;S.scale=Number.isFinite(+o.scale)?+o.scale:S.scale;S.rot=Number.isFinite(+o.rot)?+o.rot:S.rot;S.bg=o.bg||S.bg;S.bgMode=o.bgm||S.bgMode;S.bgCustom=o.bgc||S.bgCustom;S.morph=o.morph!==0;S.morphSpeed=Number.isFinite(+o.ms)?+o.ms:S.morphSpeed;S.useCustom=Array.isArray(o.custom);if(S.useCustom)S.customColors=o.custom.slice();S.smoothPath=!!o.smooth;LOCKS=new Set(Array.isArray(o.locks)?o.locks:["s:opacity","s:palette"]);
+  if(!o||typeof o!=="object"||!PATTERNS[o.p])return;
+  S.pat=o.p;
+  S.params=sanitizeParams(S.pat,o.params);
+  S.draw=VALID_DRAW_MODES.has(o.draw)?o.draw:S.draw;
+  S.lineWidth=safeNumber(o.lw,S.lineWidth,0.2,6);
+  S.pointSize=safeNumber(o.ps,S.pointSize,0.3,8);
+  S.opacity=safeNumber(o.op,S.opacity,0.02,1);
+  S.density=Math.round(safeNumber(o.d,S.density,200,60000));
+  S.blend=!!o.blend;
+  const palette=Number(o.palette);
+  S.palette=Number.isInteger(palette)&&palette>=0&&palette<PALETTES.length?palette:S.palette;
+  S.colorMode=VALID_COLOR_MODES.has(o.cm)?o.cm:S.colorMode;
+  S.scale=safeNumber(o.scale,S.scale,0.2,1.6);
+  S.rot=safeNumber(o.rot,S.rot,0,360);
+  S.bgCustom=safeColor(o.bgc,S.bgCustom,false);
+  const bgMode=VALID_BG_MODES.has(o.bgm)?o.bgm:S.bgMode;
+  S.bg=bgMode==="custom"?S.bgCustom:bgMode==="transparent"?"transparent":safeColor(o.bg,S.bg,false);
+  S.bgMode=bgMode;
+  S.morph=o.morph!==0;
+  S.morphSpeed=safeNumber(o.ms,S.morphSpeed,0.04,0.5);
+  const custom=o.custom;
+  S.useCustom=Array.isArray(custom)&&custom.length>=2&&custom.length<=7&&custom.every(color=>typeof color==="string"&&HEX_COLOR.test(color));
+  if(S.useCustom)S.customColors=custom.slice();
+  S.smoothPath=!!o.smooth;
+  LOCKS=new Set(Array.isArray(o.locks)?o.locks.filter(key=>typeof key==="string").slice(0,32):["s:opacity","s:palette"]);
 }
 function encodeState(){const json=JSON.stringify(compactState());const bytes=new TextEncoder().encode(json);let bin="";bytes.forEach(b=>bin+=String.fromCharCode(b));return btoa(bin).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");}
 function decodeState(token){token=token.replace(/-/g,"+").replace(/_/g,"/");while(token.length%4)token+="=";const bin=atob(token);const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes));}

@@ -1,3 +1,16 @@
+# Local secrets, environment, and agent/session state
+.env
+.env.*
+!.env.example
+*.local.md
+settings.local.json
+.pi/
+.pi-subagents/
+PLAN.md
+plan.md
+*vibe-coding-rules*.md
+*Vibe Coding Rules*.md
+
 # Editor / IDE
 .vscode/
 .idea/

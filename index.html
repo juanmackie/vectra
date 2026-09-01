@@ -114,7 +114,7 @@
           <div class="chips" id="palettes"></div>
           <div class="custom-editor hidden" id="customEditor"></div>
           <div class="field">
-            <div class="field-top"><label for="colorMode">Color mode</label></div>
+            <div class="field-top"><span>Color mode</span></div>
             <div class="seg" id="colorMode" role="group" aria-label="Color mode">
               <button data-v="sequence" class="on" type="button" aria-pressed="true">Sequence</button>
               <button data-v="distance" type="button" aria-pressed="false">Center Distance</button>
@@ -129,7 +129,7 @@
         <button class="sec-head" type="button" aria-expanded="true">Style <span class="tw">▾</span></button>
         <div class="sec-body">
           <div class="field">
-            <div class="field-top"><label>Draw mode</label><span class="ft-right"><span class="lockslot" data-lock="s:draw"></span></span></div>
+            <div class="field-top"><span>Draw mode</span><span class="ft-right"><span class="lockslot" data-lock="s:draw"></span></span></div>
             <div class="seg" id="drawMode" role="group" aria-label="Draw mode">
               <button data-v="line" type="button" aria-pressed="true">Line</button>
               <button data-v="dots" type="button" aria-pressed="false">Dots</button>
@@ -151,8 +151,8 @@
             <div class="field-top"><label for="vDensity">Density</label><span class="ft-right"><span class="lockslot" data-lock="s:density"></span><input class="val" id="vDensity" type="text" aria-label="Density value"></span></div>
             <input type="range" id="rDensity" min="200" max="60000" step="100" aria-label="Density in points">
           </div>
-          <label class="toggle" id="tBlend" role="checkbox" aria-checked="false" tabindex="0"><span class="box"></span><span>Additive blend (neon)</span></label>
-          <label class="toggle on" id="tMorph" role="checkbox" aria-checked="true" tabindex="0"><span class="box"></span><span>Smooth morph</span></label>
+          <div class="toggle" id="tBlend" role="checkbox" aria-checked="false" tabindex="0"><span class="box"></span><span>Additive blend (neon)</span></div>
+          <div class="toggle on" id="tMorph" role="checkbox" aria-checked="true" tabindex="0"><span class="box"></span><span>Smooth morph</span></div>
           <div class="field" id="fMorph">
             <div class="field-top"><label for="vMorph">Morph speed</label><input class="val" id="vMorph" type="text" aria-label="Morph speed value"></div>
             <input type="range" id="rMorph" min="0.04" max="0.5" step="0.01" aria-label="Morph speed">
@@ -186,7 +186,7 @@
             <button class="btn" id="bReset" type="button">Reset</button>
           </div>
           <div class="hint">SVG exports as a 1000×1000 vector. Lines become one path per color bin; dots become grouped circle paths. SVG stays editable in Illustrator and scales without quality loss. For high-density dot exports, lower density first if the file becomes too large.</div>
-          <label class="toggle" id="tSmooth" role="checkbox" aria-checked="false" tabindex="0"><span class="box"></span><span>Smooth single-path export (line, solid color)</span></label>
+          <div class="toggle" id="tSmooth" role="checkbox" aria-checked="false" tabindex="0"><span class="box"></span><span>Smooth single-path export (line, solid color)</span></div>
           <div class="hint">For line drawings only. When enabled, export uses one solid color from the final palette color and simplifies the path into a single Bézier curve while preserving sharp corners. This does not affect preview, dot mode, or PNG export.</div>
         </div>
       </section>
