@@ -35,8 +35,8 @@ shareable URL state, and SVG/PNG export.
   load a share URL, and export SVG/PNG.
 - Verify malformed URL state falls back safely and cannot add markup to exported
   SVG. Test keyboard focus and the mobile layout when visible UI changes.
-- Run `node --check` on every JavaScript file and the benchmark harness when
-  algorithm or rendering code changes.
+- Run `node --check` on every JavaScript file when algorithm or rendering code
+  changes.
 - Run `git diff --check` and inspect repository status before closeout.
 
 ## Child DOX Index
